@@ -5,24 +5,6 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 export default class ProductList extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            products: [
-                {
-                    id: 1,
-                    name: "Water",
-                    price: 20.8,
-                    description: "Water with mineral",
-                    stock: 3
-                },
-                {
-                    id: 2,
-                    name: "Kitat",
-                    price: 40,
-                    description: "Chocolate with biscuit",
-                    stock: 20
-                }
-            ]
-        }
 
         this.selectRowProp = {
             mode: 'radio',
@@ -34,7 +16,7 @@ export default class ProductList extends Component {
     }
     render() {
         return (
-            <BootstrapTable data={this.state.products} selectRow={this.selectRowProp} bordered={false} striped hover condensated>
+            <BootstrapTable data={this.props.products} selectRow={this.selectRowProp} striped hover condensated>
                 <TableHeaderColumn 
                     dataField="id"  
                     dataAlign="center" 
@@ -51,7 +33,7 @@ export default class ProductList extends Component {
                     filter={{type: 'TextFilter', delay: 0 }}
                     columnTitle
                 > 
-                Product Name 
+                    Product Name 
                 </TableHeaderColumn>
 
                 <TableHeaderColumn 

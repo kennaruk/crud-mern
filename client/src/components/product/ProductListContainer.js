@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { ButtonToolbar, Button, Glyphicon } from 'react-bootstrap';
 import ProductList from './ProductList'
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 export default class CourseListContainer extends Component {
     constructor(props) {
@@ -19,7 +21,7 @@ export default class CourseListContainer extends Component {
 
         if(selectProductId) {
             this.setState({selectProductId: null});
-            this.props.history.push(`/course/${selectProductId}`);
+            this.props.history.push(`/product/${selectProductId}`);
         }
     }
 
@@ -27,8 +29,22 @@ export default class CourseListContainer extends Component {
         const selectProductId = this.state.selectedProductId;
 
         if(selectProductId) {
+            confirmAlert({
+                title: 'Confirm to delete',
+                message: 'Are you sure to do this.',
+                buttons: [
+                    {
+                        label: 'Yes',
+                        onClick: () => alert('Click Yes')
+                    },
+                    {
+                        label: 'No'
+                    }
+                ]
+            })
+              
             this.setState({selectedProductId: null});
-            //TODO: Add Delete Method
+              
         }
     }
 
@@ -71,7 +87,7 @@ export default class CourseListContainer extends Component {
                 </div>
 
                 <div className="row">
-                        <ProductList handleRowSelect={this.handleRowSelect}/>
+                        <ProductList handleRowSelect={this.handleRowSelect} products={this.props.products}/>
                 </div>
             </div>
         )

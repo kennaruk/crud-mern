@@ -7,11 +7,11 @@ export default class HeaderNavContainer extends Component {
             <Navbar>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="/home">Product Stock</a>
+                        <a href="/">Product Stock</a>
                     </Navbar.Brand>
                 </Navbar.Header>
                 <Nav>
-                    <NavItem eventKey={1} href="/home">
+                    <NavItem eventKey={1} href="/">
                         Home
                     </NavItem>
                     <NavItem eventKey={2} href="/about">
