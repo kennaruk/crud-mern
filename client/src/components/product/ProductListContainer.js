@@ -34,8 +34,9 @@ export default class CourseListContainer extends Component {
                 message: 'Are you sure to do this.',
                 buttons: [
                     {
+                        //TODO: Yes with data binding handleDeleteProduct
                         label: 'Yes',
-                        onClick: () => alert('Click Yes')
+                        onClick: () => this.props.handleDeleteProduct(selectProductId)
                     },
                     {
                         label: 'No'

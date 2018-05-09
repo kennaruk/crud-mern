@@ -8,9 +8,11 @@ import ProductForm from './product/ProductForm';
 
 const history = createBrowserHistory();
 class App extends Component {
+
   constructor() {
     super();
     this.state = {
+      //DidMount fetch products from api
       products: [
           {
               id: 1,
@@ -29,16 +31,71 @@ class App extends Component {
       ]
     }
   }
+
+  handleEditProduct = (product) => {
+    //TODO: Call API Update By Id
+    let products = this.state.products.slice();
+    products = products.map((obj) => {
+      if(obj['id'] == product.id)
+        return product;
+      return obj;
+    });
+
+    this.setState({
+      products: products
+    });
+  }
+
+  handleNewProduct = (product) => {
+    let ID =  () => {
+      return '_' + Math.random().toString(36).substr(2, 9);
+    };
+    let id = ID();
+    product.id = id;
+    
+    //TODO: Call API Add New Product
+    let products = this.state.products.slice();
+    products.push(product);
+    
+    this.setState({
+      products: products
+    });
+  }
+
+  handleDeleteProduct = (id) => {
+    //TODO: Call API Delete By Id
+    
+    let products = this.state.products.slice();
+    products = products.filter((obj) => {
+      return obj['id'] != id;
+    });
+
+    this.setState({
+      products: products
+    });
+  }
+
   renderProductListContainer = (props) => {
     return (
-      <ProductListContainer products={this.state.products} {...props}/>
+      <ProductListContainer 
+        products={this.state.products} 
+        {...props}
+        handleDeleteProduct={this.handleDeleteProduct}
+      />
     )
   }
+
   renderProductForm = (props) => {
     return (
-      <ProductForm products={this.state.products} {...props}/>
+      <ProductForm 
+        products={this.state.products} 
+        {...props} 
+        handleNewProduct={this.handleNewProduct}
+        handleEditProduct={this.handleEditProduct}
+      />
     )
   }
+
   render() {
     return (
       <div>
