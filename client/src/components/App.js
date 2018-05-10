@@ -10,7 +10,6 @@ const history = createBrowserHistory();
 class App extends Component {
 
   componentDidMount() {
-    // console.log('Did mount')
     fetch('/getallproducts')
     .then(res => res.json())
     .then(res => 
@@ -23,40 +22,18 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      //DidMount fetch products from api
-      products: [
-          {
-              id: 1,
-              name: "Water",
-              price: 20.8,
-              description: "Water with mineral",
-              stock: 3
-          },
-          {
-              id: 2,
-              name: "Kitat",
-              price: 40,
-              description: "Chocolate with biscuit",
-              stock: 20
-          }
-      ]
+      products: []
     }
   }
 
   handleEditProduct = (product) => {
-    //TODO: Call API Update By Id
     let products = this.state.products.slice();
-    console.log('product:', product)
+
     products = products.map((obj) => {
       if(obj['_id'] == product._id)
         return product;
       return obj;
     });
-    
-
-    // console.log('product before put:', JSON.stringify(product))
-    // var data = new FormData();
-    // data.append( "json", JSON.stringify( product ) );
 
     fetch('/update/product', {
       method: 'POST',
@@ -92,7 +69,6 @@ class App extends Component {
       console.log('res from add product:', res)
     })
     
-    //TODO: Call API Add New Product
     let products = this.state.products.slice();
     products.push(product);
     
@@ -102,7 +78,6 @@ class App extends Component {
   }
 
   handleDeleteProduct = (id) => {
-    //TODO: Call API Delete By Id
     fetch('/delete/product', {
       method: 'DELETE',
       headers: {
