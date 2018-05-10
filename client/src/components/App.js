@@ -9,6 +9,17 @@ import ProductForm from './product/ProductForm';
 const history = createBrowserHistory();
 class App extends Component {
 
+  componentDidMount() {
+    // console.log('Did mount')
+    fetch('/getallproducts')
+    .then(res => res.json())
+    .then(res => 
+      this.setState({
+        products: res.data
+      })
+    );
+  }
+
   constructor() {
     super();
     this.state = {
@@ -35,23 +46,51 @@ class App extends Component {
   handleEditProduct = (product) => {
     //TODO: Call API Update By Id
     let products = this.state.products.slice();
+    console.log('product:', product)
     products = products.map((obj) => {
-      if(obj['id'] == product.id)
+      if(obj['_id'] == product._id)
         return product;
       return obj;
     });
+    
 
-    this.setState({
-      products: products
+    // console.log('product before put:', JSON.stringify(product))
+    // var data = new FormData();
+    // data.append( "json", JSON.stringify( product ) );
+
+    fetch('/update/product', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      }, 
+      body: JSON.stringify(product)
+    })
+    .then(res => res.json())
+    .then(res => {
+      if(res.success) {
+        this.setState({
+          products: products
+        });
+      } else {
+        console.log(res.message)
+      }
     });
+
+    
   }
 
   handleNewProduct = (product) => {
-    let ID =  () => {
-      return '_' + Math.random().toString(36).substr(2, 9);
-    };
-    let id = ID();
-    product.id = id;
+    fetch('/addproduct', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      }, 
+      body: JSON.stringify(product)
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log('res from add product:', res)
+    })
     
     //TODO: Call API Add New Product
     let products = this.state.products.slice();
@@ -64,10 +103,21 @@ class App extends Component {
 
   handleDeleteProduct = (id) => {
     //TODO: Call API Delete By Id
-    
+    fetch('/delete/product', {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json"
+      }, 
+      body: JSON.stringify({_id: id})
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log('res from delte product:', res)
+    })
+
     let products = this.state.products.slice();
     products = products.filter((obj) => {
-      return obj['id'] != id;
+      return obj['_id'] != id;
     });
 
     this.setState({

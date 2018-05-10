@@ -18,7 +18,7 @@ export default class ProductList extends Component {
         return (
             <BootstrapTable data={this.props.products} selectRow={this.selectRowProp} striped hover condensated>
                 <TableHeaderColumn 
-                    dataField="id"  
+                    dataField="_id"  
                     dataAlign="center" 
                     isKey 
                     dataSort

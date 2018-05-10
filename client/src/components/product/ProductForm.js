@@ -17,7 +17,7 @@ export default class ProductForm extends Component {
         this.state = {
             productId: props.match.params.id,
             isAdd: props.match.params.id === undefined,
-            product: this.findElement(this.props.products, 'id', props.match.params.id)
+            product: this.findElement(this.props.products, '_id', props.match.params.id)
         }
     }
     

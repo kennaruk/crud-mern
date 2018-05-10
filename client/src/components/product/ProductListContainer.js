@@ -51,7 +51,7 @@ export default class CourseListContainer extends Component {
 
     handleRowSelect = (row, isSelected) => {
         if (isSelected) {
-            this.setState({selectedProductId: row.id});
+            this.setState({selectedProductId: row._id});
         }
     }
 
